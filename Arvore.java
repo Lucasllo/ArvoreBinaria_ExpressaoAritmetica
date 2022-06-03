@@ -4,40 +4,38 @@ import java.util.Stack;
 
 public class Arvore {
 
-public No Operacao(String simb, No esq, No dir) {
+	public No Operacao(String simb, No esq, No dir) {
 		if (simb.equals("+")) {
 			return new Soma(esq, dir);
 		}
-		
-		else if (simb.equals("-")){
+
+		else if (simb.equals("-")) {
 			return new Subtracao(esq, dir);
 		}
-			
-		else if (simb.equals("*")){
+
+		else if (simb.equals("*")) {
 			return new Multiplicacao(esq, dir);
 		}
-			
-		else if (simb.equals("/")){
+
+		else if (simb.equals("/")) {
 			return new Divisao(esq, dir);
 		}
-			
+
 		else {
-			throw new IllegalArgumentException();	
+			throw new IllegalArgumentException();
 		}
-			
+
 	}
 
-public No criarArvore(String[] dados) {
-		
+	public No criarArvore(String[] dados) {
+
 		Stack<String> simbolos = new Stack<String>();
 		Stack<No> nos = new Stack<No>();
 
 		No esq;
 		No dir;
 
-		for (int i = 0; i < dados.length; i++) {
-			String dado = dados[i];
-			
+		for (String dado : dados) {
 
 			if (dado.chars().allMatch(Character::isDigit)) {
 				No numero = new Numero(Integer.parseInt(dado));
@@ -45,14 +43,14 @@ public No criarArvore(String[] dados) {
 			}
 
 			else if (dado.equals("(")) {
-				simbolos.push("(");				
+				simbolos.push("(");
 			}
 
 			else if (dado.equals(")")) {
-				while(true){
+				while (true) {
 					String op = simbolos.pop();
 					if (op.equals("(")) {
-						break;						
+						break;
 					}
 					dir = nos.pop();
 					esq = nos.pop();
@@ -62,10 +60,10 @@ public No criarArvore(String[] dados) {
 			}
 
 			else {
-				while(!simbolos.isEmpty()) {
+				while (!simbolos.isEmpty()) {
 					String op = simbolos.peek();
 					if (op.equals("(")) {
-						break;				
+						break;
 					}
 					simbolos.pop();
 					dir = nos.pop();
